@@ -1,0 +1,40 @@
+{
+  "name": "@constellation/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@constellation/shared": "*",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@monaco-editor/react": "^4.7.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@xterm/xterm": "^5.5.0",
+    "d3-force-3d": "^3.0.6",
+    "lucide-react": "^1.21.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-force-graph-2d": "^1.29.1",
+    "react-router-dom": "^7.18.0",
+    "react-xtermjs": "^1.0.10",
+    "three": "^0.174.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.1",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/three": "^0.174.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^5.7.0",
+    "vite": "^6.3.0"
+  }
+}

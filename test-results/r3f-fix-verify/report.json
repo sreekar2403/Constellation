@@ -1,0 +1,145 @@
+{
+  "base": "http://localhost:5173",
+  "startedAt": "2026-06-23T09:55:32.282Z",
+  "routes": [
+    {
+      "id": "01-dashboard",
+      "path": "/",
+      "label": "Dashboard (KnowledgeGraph3D · ForceGraph)",
+      "screenshotOk": true,
+      "interactionOk": true,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 1,
+      "rootSize": 34411,
+      "criticalErrors": [],
+      "consoleErrorsCount": 4,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [
+        {
+          "type": "warning",
+          "text": "[.WebGL-0x413400198800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+        },
+        {
+          "type": "warning",
+          "text": "[.WebGL-0x413400198800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+        },
+        {
+          "type": "warning",
+          "text": "[.WebGL-0x413400198800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+        },
+        {
+          "type": "warning",
+          "text": "[.WebGL-0x413400198800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+        }
+      ],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "02-kanban",
+      "path": "/kanban",
+      "label": "Kanban",
+      "screenshotOk": true,
+      "interactionOk": null,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 0,
+      "rootSize": 18440,
+      "criticalErrors": [],
+      "consoleErrorsCount": 0,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "03-platforms",
+      "path": "/platforms",
+      "label": "Platforms",
+      "screenshotOk": true,
+      "interactionOk": null,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 0,
+      "rootSize": 42718,
+      "criticalErrors": [],
+      "consoleErrorsCount": 0,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "04-genome",
+      "path": "/genome",
+      "label": "Genome",
+      "screenshotOk": true,
+      "interactionOk": null,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 1,
+      "rootSize": 13089,
+      "criticalErrors": [],
+      "consoleErrorsCount": 0,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "05-tasks",
+      "path": "/tasks",
+      "label": "Tasks",
+      "screenshotOk": true,
+      "interactionOk": null,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 0,
+      "rootSize": 14300,
+      "criticalErrors": [],
+      "consoleErrorsCount": 0,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "06-skills",
+      "path": "/skills",
+      "label": "Skills",
+      "screenshotOk": true,
+      "interactionOk": null,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 0,
+      "rootSize": 13691,
+      "criticalErrors": [],
+      "consoleErrorsCount": 0,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "07-settings",
+      "path": "/settings",
+      "label": "Settings",
+      "screenshotOk": true,
+      "interactionOk": null,
+      "r3fHooksHere": false,
+      "loadErr": null,
+      "canvasCount": 0,
+      "rootSize": 17180,
+      "criticalErrors": [],
+      "consoleErrorsCount": 0,
+      "pageErrorsCount": 0,
+      "consoleErrorsSample": [],
+      "pageErrorsSample": [],
+      "verdict": "PASS"
+    }
+  ],
+  "r3fHooksErrorSeen": false,
+  "overallPass": true,
+  "finishedAt": "2026-06-23T09:55:51.270Z"
+}
