@@ -179,9 +179,39 @@ export class ProviderStore {
  * -------------------------------------------------------------------------- */
 
 export class SkillStore {
+  private db: any;
+  constructor(private eventBus: EventBus, db?: any) {
+    this.db = db;
+    if (this.db) {
+      // Load existing skills from DB into memory at startup
+      this.db
+        .all('SELECT * FROM skills')
+        .then((rows: any[]) => {
+          rows.forEach((row) => {
+            const skill = {
+              id: row.id,
+              name: row.name,
+              description: row.description,
+              providerId: row.providerId,
+              triggerEmbedding: JSON.parse(row.triggerEmbedding),
+              similarityThreshold: row.similarityThreshold,
+              usageCount: row.usageCount,
+              totalTokensSaved: row.totalTokensSaved,
+              status: row.status,
+              createdAt: row.createdAt,
+              steps: JSON.parse(row.steps),
+              sourcePatternId: row.sourcePatternId,
+              generation: row.generation,
+            } as any;
+            this.skills.set(skill.id, skill);
+          });
+        })
+        .catch((e: any) => console.error('Failed to load skills from DB', e));
+    }
+  }
+
   private skills = new Map<string, Skill>();
   private triggers: SkillTrigger[] = [];
-  constructor(private eventBus: EventBus) {}
 
   create(input: Omit<Skill, 'id' | 'createdAt' | 'usageCount' | 'totalTokensSaved' | 'status'>): Skill {
     const skill: Skill = {
@@ -194,6 +224,27 @@ export class SkillStore {
     };
     this.skills.set(skill.id, skill);
     this.eventBus.emit(WS_V3_EVENTS.SKILL_CREATED, { skill });
+    // Persist to DB if available
+    if (this.db) {
+      const stmt = `INSERT INTO skills (id, name, description, providerId, triggerEmbedding, similarityThreshold, usageCount, totalTokensSaved, status, createdAt, steps, sourcePatternId, generation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      this.db
+        .run(stmt, [
+          skill.id,
+          skill.name,
+          skill.description,
+          skill.providerId,
+          JSON.stringify(skill.triggerEmbedding),
+          skill.similarityThreshold,
+          skill.usageCount,
+          skill.totalTokensSaved,
+          skill.status,
+          skill.createdAt,
+          JSON.stringify(skill.steps),
+          skill.sourcePatternId,
+          skill.generation,
+        ])
+        .catch((e: any) => console.error('Failed to insert skill into DB', e));
+    }
     return skill;
   }
 
@@ -222,6 +273,14 @@ export class SkillStore {
     skill.lastFiredAt = new Date().toISOString();
     this.skills.set(skillId, skill);
 
+    // Persist usage updates to DB if available
+    if (this.db) {
+      const stmt = `UPDATE skills SET usageCount = ?, totalTokensSaved = ?, lastFiredAt = ? WHERE id = ?`;
+      this.db
+        .run(stmt, [skill.usageCount, skill.totalTokensSaved, skill.lastFiredAt, skill.id])
+        .catch((e: any) => console.error('Failed to update skill usage in DB', e));
+    }
+
     const trigger: SkillTrigger = {
       id: uuidv4(),
       skillId,
@@ -240,6 +299,11 @@ export class SkillStore {
     if (!existing) return undefined;
     const updated: Skill = { ...existing, status: 'archived' };
     this.skills.set(id, updated);
+    // Persist archive status to DB if available
+    if (this.db) {
+      const stmt = `UPDATE skills SET status = ? WHERE id = ?`;
+      this.db.run(stmt, [updated.status, id]).catch((e: any) => console.error('Failed to archive skill in DB', e));
+    }
     return updated;
   }
 
@@ -287,7 +351,27 @@ function cosineSimilarity(a: number[], b: number[]): number {
 
 export class PatternStore {
   private patterns = new Map<string, DetectedPattern>();
-  constructor(private eventBus: EventBus) {}
+  private db: any;
+  constructor(private eventBus: EventBus, db?: any) {
+    this.db = db;
+    if (this.db) {
+      this.db
+        .all('SELECT * FROM patterns')
+        .then((rows: any[]) => {
+          rows.forEach((row) => {
+            try {
+              const pattern = JSON.parse(row.json);
+              if (pattern && pattern.id) {
+                this.patterns.set(pattern.id, pattern);
+              }
+            } catch (e) {
+              console.error('Failed to parse pattern from DB', e);
+            }
+          });
+        })
+        .catch((e: any) => console.error('Failed to load patterns from DB', e));
+    }
+  }
 
   create(input: Omit<DetectedPattern, 'id' | 'detectedAt'>): DetectedPattern {
     const pattern: DetectedPattern = {
@@ -297,6 +381,11 @@ export class PatternStore {
     };
     this.patterns.set(pattern.id, pattern);
     this.eventBus.emit(WS_V3_EVENTS.PATTERN_DETECTED, { pattern });
+    // Persist to DB if available
+    if (this.db) {
+      const stmt = `INSERT INTO patterns (id, json) VALUES (?, ?)`;
+      this.db.run(stmt, [pattern.id, JSON.stringify(pattern)]).catch((e: any) => console.error('Failed to insert pattern into DB', e));
+    }
     return pattern;
   }
 
@@ -315,6 +404,11 @@ export class PatternStore {
     if (!existing) return undefined;
     const updated = { ...existing, ...updates, id: existing.id };
     this.patterns.set(id, updated);
+    // Persist updates to DB if available
+    if (this.db) {
+      const stmt = `UPDATE patterns SET json = ? WHERE id = ?`;
+      this.db.run(stmt, [JSON.stringify(updated), id]).catch((e: any) => console.error('Failed to update pattern in DB', e));
+    }
     return updated;
   }
 }

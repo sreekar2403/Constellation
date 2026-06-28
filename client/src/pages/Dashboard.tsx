@@ -38,8 +38,12 @@ export const Dashboard: React.FC = () => {
 
       {/* Main: platforms panel + 3D brain */}
       <div className="flex flex-1 min-h-0 px-4 pb-4 gap-3">
-        <AIPlatformsPanel />
-        <KnowledgeGraph3D />
+        <div className="w-72 shrink-0">
+          <AIPlatformsPanel />
+        </div>
+        <div className="flex-1 min-h-0">
+          <KnowledgeGraph3D className="h-full w-full" />
+        </div>
       </div>
     </div>
   );

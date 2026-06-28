@@ -49,7 +49,14 @@ export class ProcessManager {
       cols: 120,
       rows: 30,
       cwd: config.workingDirectory,
-      env: { ...process.env } as Record<string, string>,
+      env: (() => {
+        const allow = ['PATH', 'HOME'];
+        const filtered: Record<string, string> = {};
+        for (const [k, v] of Object.entries(process.env)) {
+          if (allow.includes(k)) filtered[k] = v as string;
+        }
+        return filtered;
+      })(),
     });
 
     const handle: AgentHandle = {
@@ -179,6 +186,11 @@ export class ProcessManager {
         return 'opencode';
       case 'ollama':
         return `ollama run ${config.model}`;
+      case 'hermes':
+      case 'pi':
+      case 'kimi':
+        // These tools currently have no special CLI flags; use the tool name directly.
+        return config.tool;
       default:
         return config.tool;
     }

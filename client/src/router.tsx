@@ -7,7 +7,6 @@ import Genome from './pages/Genome';
 import { Tasks } from './pages/Tasks';
 import { Skills } from './pages/Skills';
 import { Settings } from './pages/Settings';
-import { ChatPanel } from './components/panels/ChatPanel';
 
 const routes: RouteObject[] = [
   {
@@ -24,7 +23,6 @@ const routes: RouteObject[] = [
       { path: '/skills', element: <Skills /> },
       { path: '/skills/:skillId', element: <Skills /> },
       { path: '/settings', element: <Settings /> },
-      { path: '/chat/:providerId', element: <ChatPanel /> },
     ],
   },
 ];

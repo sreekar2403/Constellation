@@ -3,7 +3,7 @@
 > **A multi-page Agent Operating System that crystallises recurring tasks into reusable Skills.**
 
 Constellation is a self-evolving multi-agent control plane. It manages a registry of
-AI CLI providers (Claude Code, Gemini, Ollama, Hermes, OpenCode, ACP), routes CEO-scoped
+AI CLI providers (Claude Code, Gemini, Ollama, Hermes, OpenCode, Pi CLI, Kimi CLI), routes CEO-scoped
 tasks through a dispatcher, and **learns from completed work** — when the same pattern
 of task observations recurs, it auto-crystallises the workflow into a Skill that future
 tasks can replay instead of re-prompting the LLM.
@@ -133,7 +133,7 @@ curl http://localhost:3001/api/skills
 │  │ ─ Task     │◄─┤ ─ Dispatch │  │ ─ 7 adapters           │  │
 │  │ ─ Provider │  │ ─ Pattern  │  │   (Ollama, Claude,     │  │
 │  │ ─ Skill    │  │ ─ Skill    │  │    Gemini, Hermes,     │  │
-│  │ ─ Pattern  │  │ ─ Health   │  │    OpenCode, ACP×2)    │  │
+│  │ ─ Pattern  │  │ ─ Health   │  │    OpenCode, Pi CLI, Kimi CLI)    │  │
 │  │ ─ Observe  │  │            │  │ ─ /connect endpoint    │  │
 │  └────────────┘  └────────────┘  └────────────────────────┘  │
 └──────────────────────────────────────────────────────────────┘
@@ -202,7 +202,7 @@ constellation/
 ├── server/                 # @constellation/server — Express + WS + workers
 │   └── src/
 │       ├── index.ts        # Wires stores + workers + routes
-│       ├── adapters/       # 7 provider adapters (CLI/HTTP/ACP)
+│       ├── adapters/       # 7 provider adapters (CLI/HTTP/Pi CLI, Kimi CLI)
 │       ├── store/          # Reactive stores (Tasks, Skills, Patterns, ...)
 │       ├── workers/        # Dispatcher, PatternDetector, SkillRunner, HealthCheck
 │       └── provider-registry.ts
@@ -249,7 +249,7 @@ constellation/
 
 ## 📝 License
 
-Private — internal Agent OS project.
+MIT License (see LICENSE file).
 
 ---
 

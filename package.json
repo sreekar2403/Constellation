@@ -9,15 +9,27 @@
     "client"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "test": "vitest run",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\" \"npm run dev:python\"",
     "dev:server": "npm -w server run dev",
     "dev:client": "npm -w client run dev",
+    "dev:python": "cd python && uv run uvicorn constellation.main:app --reload --port 8000",
     "build": "npm -w shared run build && npm -w server run build && npm -w client run build",
-    "lint": "eslint . --ext .ts,.tsx",
-    "typecheck": "npm -w shared run typecheck && npm -w server run typecheck && npm -w client run typecheck"
+    "build:python": "cd python && uv sync",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "typecheck": "npm -w shared run typecheck && npm -w server run typecheck && npm -w client run typecheck",
+    "test:python": "cd python && uv run pytest",
+    "install:python": "cd python && uv sync"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0",
-    "typescript": "^5.7.0"
-  }
+    "@eslint/js": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "concurrently": "^10.0.3",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "vitest": "^2.1.9"
+  },
+  "type": "module"
 }
